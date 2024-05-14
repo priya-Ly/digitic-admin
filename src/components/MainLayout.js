@@ -6,6 +6,10 @@ import {
   AiOutlineUser,
   AiOutlineBgColors,
 } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
+import { CiHome } from "react-icons/ci";
+
+import { FcAbout } from "react-icons/fc";
 import { RiCouponLine } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -30,8 +34,10 @@ const MainLayout = () => {
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo">
           <h2 className="text-white fs-5 text-center py-3 mb-0">
-            <span className="sm-logo">DC</span>
-            <span className="lg-logo">Dev Corner</span>
+            <span className="sm-logo">LY</span>
+            <span className="lg-logo" style={{ color: "black" }}>
+              We Design Digital Happiness <AiFillHeart />
+            </span>
           </h2>
         </div>
         <Menu
@@ -51,111 +57,121 @@ const MainLayout = () => {
               label: "Dashboard",
             },
             {
-              key: "customers",
-              icon: <AiOutlineUser className="fs-4" />,
-              label: "Customers",
+              key: "home",
+              icon: <CiHome className="fs-4" />,
+              label: "Home",
             },
             {
-              key: "Catalog",
-              icon: <AiOutlineShoppingCart className="fs-4" />,
-              label: "Catalog",
-              children: [
-                {
-                  key: "product",
-                  icon: <AiOutlineShoppingCart className="fs-4" />,
-                  label: "Add Product",
-                },
-                {
-                  key: "list-product",
-                  icon: <AiOutlineShoppingCart className="fs-4" />,
-                  label: "Product List",
-                },
-                {
-                  key: "brand",
-                  icon: <SiBrandfolder className="fs-4" />,
-                  label: "Brand",
-                },
-                {
-                  key: "list-brand",
-                  icon: <SiBrandfolder className="fs-4" />,
-                  label: "Brand List ",
-                },
-                {
-                  key: "category",
-                  icon: <BiCategoryAlt className="fs-4" />,
-                  label: "Category",
-                },
-                {
-                  key: "list-category",
-                  icon: <BiCategoryAlt className="fs-4" />,
-                  label: "Category List",
-                },
-                {
-                  key: "color",
-                  icon: <AiOutlineBgColors className="fs-4" />,
-                  label: "Color",
-                },
-                {
-                  key: "list-color",
-                  icon: <AiOutlineBgColors className="fs-4" />,
-                  label: "Color List",
-                },
-              ],
+              key: "aboutus",
+              icon: <AiFillHeart className="fs-4" />,
+              label: "About Us",
             },
             {
-              key: "orders",
-              icon: <FaClipboardList className="fs-4" />,
-              label: "Orders",
+              key: "about",
+              icon: <FcAbout className="fs-4" />,
+              label: "About FAQS",
             },
-            {
-              key: "marketing",
-              icon: <RiCouponLine className="fs-4" />,
-              label: "Marketing",
-              children: [
-                {
-                  key: "coupon",
-                  icon: <ImBlog className="fs-4" />,
-                  label: "Add Coupon",
-                },
-                {
-                  key: "coupon-list",
-                  icon: <RiCouponLine className="fs-4" />,
-                  label: "Coupon List",
-                },
-              ],
-            },
-            {
-              key: "blogs",
-              icon: <FaBloggerB className="fs-4" />,
-              label: "Blogs",
-              children: [
-                {
-                  key: "blog",
-                  icon: <ImBlog className="fs-4" />,
-                  label: "Add Blog",
-                },
-                {
-                  key: "blog-list",
-                  icon: <FaBloggerB className="fs-4" />,
-                  label: "Blog List",
-                },
-                {
-                  key: "blog-category",
-                  icon: <ImBlog className="fs-4" />,
-                  label: "Add Blog Category",
-                },
-                {
-                  key: "blog-category-list",
-                  icon: <FaBloggerB className="fs-4" />,
-                  label: "Blog Category List",
-                },
-              ],
-            },
-            {
-              key: "enquiries",
-              icon: <FaClipboardList className="fs-4" />,
-              label: "Enquiries",
-            },
+            // {
+            //   key: "Catalog",
+            //   icon: <AiOutlineShoppingCart className="fs-4" />,
+            //   label: "Catalog",
+            //   children: [
+            //     {
+            //       key: "product",
+            //       icon: <AiOutlineShoppingCart className="fs-4" />,
+            //       label: "Add Product",
+            //     },
+            //     {
+            //       key: "list-product",
+            //       icon: <AiOutlineShoppingCart className="fs-4" />,
+            //       label: "Product List",
+            //     },
+            //     {
+            //       key: "brand",
+            //       icon: <SiBrandfolder className="fs-4" />,
+            //       label: "Brand",
+            //     },
+            //     {
+            //       key: "list-brand",
+            //       icon: <SiBrandfolder className="fs-4" />,
+            //       label: "Brand List ",
+            //     },
+            //     {
+            //       key: "category",
+            //       icon: <BiCategoryAlt className="fs-4" />,
+            //       label: "Category",
+            //     },
+            //     {
+            //       key: "list-category",
+            //       icon: <BiCategoryAlt className="fs-4" />,
+            //       label: "Category List",
+            //     },
+            //     {
+            //       key: "color",
+            //       icon: <AiOutlineBgColors className="fs-4" />,
+            //       label: "Color",
+            //     },
+            //     {
+            //       key: "list-color",
+            //       icon: <AiOutlineBgColors className="fs-4" />,
+            //       label: "Color List",
+            //     },
+            //   ],
+            // },
+            // {
+            //   key: "orders",
+            //   icon: <FaClipboardList className="fs-4" />,
+            //   label: "Orders",
+            // },
+            // {
+            //   key: "marketing",
+            //   icon: <RiCouponLine className="fs-4" />,
+            //   label: "Marketing",
+            //   children: [
+            //     {
+            //       key: "coupon",
+            //       icon: <ImBlog className="fs-4" />,
+            //       label: "Add Coupon",
+            //     },
+            //     {
+            //       key: "coupon-list",
+            //       icon: <RiCouponLine className="fs-4" />,
+            //       label: "Coupon List",
+            //     },
+            //   ],
+            // },
+            // {
+            //   key: "blogs",
+            //   icon: <FaBloggerB className="fs-4" />,
+            //   label: "Blogs",
+            //   children: [
+            //     {
+            //       key: "blog",
+            //       icon: <ImBlog className="fs-4" />,
+            //       label: "Add Blog",
+            //     },
+            //     {
+            //       key: "blog-list",
+            //       icon: <FaBloggerB className="fs-4" />,
+            //       label: "Blog List",
+            //     },
+            //     {
+            //       key: "blog-category",
+            //       icon: <ImBlog className="fs-4" />,
+            //       label: "Add Blog Category",
+            //     },
+            //     {
+            //       key: "blog-category-list",
+            //       icon: <FaBloggerB className="fs-4" />,
+            //       label: "Blog Category List",
+            //     },
+            //   ],
+            // },
+            // {
+            //   key: "enquiries",
+            //   icon: <FaClipboardList className="fs-4" />,
+            //   label: "Enquiries",
+            // },
           ]}
         />
       </Sider>
@@ -176,20 +192,20 @@ const MainLayout = () => {
           )}
           <div className="d-flex gap-4 align-items-center">
             <div className="position-relative">
-              <IoIosNotifications className="fs-4" />
+              {/* <IoIosNotifications className="fs-4" />
               <span className="badge bg-warning rounded-circle p-1 position-absolute">
                 3
-              </span>
+              </span> */}
             </div>
 
             <div className="d-flex gap-3 align-items-center dropdown">
               <div>
-                <img
+                {/* <img
                   width={32}
                   height={32}
                   src="https://stroyka-admin.html.themeforest.scompiler.ru/variants/ltr/images/customers/customer-4-64x64.jpg"
                   alt=""
-                />
+                /> */}
               </div>
               <div
                 role="button"
@@ -197,8 +213,10 @@ const MainLayout = () => {
                 data-bs-toggle="dropdown"
                 aria-expanded="false"
               >
-                <h5 className="mb-0">Navdeep</h5>
-                <p className="mb-0">navdeepdahiya753@gmail.com</p>
+                <h5 className="mb-0">Lemon Yellow</h5>
+
+                <p className="mb-0">CONTENT MANAGEMENT SYSTEM</p>
+                <p className="mb-0">Admin Panel</p>
               </div>
               <div className="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <li>
