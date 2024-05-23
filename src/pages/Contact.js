@@ -2,19 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Table, Button, Input, Space } from "antd";
 import { Link } from "react-router-dom";
 import { UpOutlined, DownOutlined } from "@ant-design/icons";
-function Trend() {
+function Contact() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [sortBy, setSortBy] = useState("updatedAt");
   const [sortOrder, setSortOrder] = useState("desc");
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1); // Current page number
-  const [pageSize, setPageSize] = useState(4); // Number of items per page
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(4);
   useEffect(() => {
     const fetchTrends = async (req, res) => {
       try {
-        const response = await fetch("http://localhost:7000/interior/trends");
+        const response = await fetch("http://localhost:7000/interior/contact");
         if (response.ok) {
           const data = await response.json();
           console.log(data);
@@ -29,7 +29,7 @@ function Trend() {
     };
     fetchTrends();
   }, []);
-  const handleTableChange = (pagination, filters, sorter) => {
+  const handleTableChange = (pagination, sorter) => {
     setCurrentPage(pagination.current);
     setPageSize(pagination.pageSize);
     setSortBy(sorter.field);
@@ -39,15 +39,16 @@ function Trend() {
     setSearchQuery(value);
     setCurrentPage(1);
   };
-  const filteredData = data.filter((item) =>
-    item.title.toLowerCase().includes(searchQuery.toLowerCase())
+
+  const filteredData = data.filter(
+    (item) =>
+      item.firstName &&
+      item.firstName.toLowerCase().includes(searchQuery.toLowerCase())
   );
   const handleSort = (column) => {
     if (column === sortBy) {
-      // Toggle sorting order if clicking on the same column
       setSortOrder(sortOrder === "asc" ? "desc" : "asc");
     } else {
-      // Set new sorting column and default sorting order (descending)
       setSortBy(column);
       setSortOrder("desc");
     }
@@ -66,22 +67,33 @@ function Trend() {
   );
   const columns = [
     {
-      title: "Title",
-      dataIndex: "title",
+      title: "FirstName",
+      dataIndex: "firstName",
       sorter: true,
-      sortOrder: sortBy === "title" && sortOrder,
+      sortOrder: sortBy === "firstName" && sortOrder,
       onHeaderCell: () => ({
-        onClick: () => handleSort("title"),
+        onClick: () => handleSort("firstName"),
       }),
     },
-
     {
-      title: "Description",
-      dataIndex: "description",
+      title: "LastName",
+      dataIndex: "lastName",
     },
     {
-      title: "Order",
-      dataIndex: "order",
+      title: "Email",
+      dataIndex: "email",
+    },
+    {
+      title: "Phone No",
+      dataIndex: "phoneno",
+    },
+    {
+      title: "Subject",
+      dataIndex: "subject",
+    },
+    {
+      title: "Message",
+      dataIndex: "message",
     },
     {
       title: "Id",
@@ -106,24 +118,8 @@ function Trend() {
         onClick: () => handleSort("updatedAt"),
       }),
     },
-    {
-      title: "Action",
-      dataIndex: "_id", // Use a unique identifier
-      render: (_, record) => (
-        <span>
-          <Link to={`/admin/trend/${record._id}`} style={buttonStyle}>
-            Edit
-          </Link>
-          <br />
-          <Link to={`/admin/trend/delete/${record._id}`} style={buttonStyle}>
-            Delete
-          </Link>
-        </span>
-      ),
-    },
   ];
   const buttonStyle = {
-    background: "linear-gradient(yellow, #ff7e5f, #Ffffed)",
     backgroundColor: "white",
     border: "2px solid black",
     color: "black",
@@ -137,16 +133,13 @@ function Trend() {
   };
   return (
     <div>
-      <h3 className="mb-4 title">Latest Trends</h3>
+      <h3 className="mb-4 title">Contact Data</h3>
       <Space>
         <Input.Search
-          placeholder="Search Title"
+          placeholder="Search FirstName"
           onSearch={handleSearch}
           style={{ width: 200 }}
         />
-        <Link to={`/admin/trends/add/`} style={buttonStyle}>
-          Add
-        </Link>
       </Space>
       <div>
         <Table
@@ -166,4 +159,4 @@ function Trend() {
   );
 }
 
-export default Trend;
+export default Contact;

@@ -1,26 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Upload, message } from "antd";
+import { Form, Input, Button, Upload, message, InputNumber } from "antd";
+import React, { useEffect, useState } from "react";
 import { UploadOutlined } from "@ant-design/icons";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-const MainAboutEdit = () => {
+function GalleryEdit() {
   const [form] = Form.useForm();
   const [image, setImage] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch existing data for the specified ID
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:7000/interior/aboutus/${id}`
+          `http://localhost:7000/interior/gallery/get/${id}`
         );
         const data = await response.json();
-        // Populate form fields with existing data
         console.log(data, "get");
-
         if (data.image) {
           setImage({
             uid: "-1",
@@ -30,45 +26,39 @@ const MainAboutEdit = () => {
           });
         }
         form.setFieldsValue({
-          title: data.title,
-          subtitle: data.subtitle,
-          description: data.description,
+          category: data.category,
+          order: data.order,
         });
       } catch (error) {
-        console.error("Error fetching data:", error);
-        // Handle error
+        console.error("Error Fetching Data:", error);
       }
     };
-
     fetchData();
   }, [id, form]);
 
   const handleEdit = async (values) => {
-    const { title, description, subtitle } = values;
-
+    const { order, category } = values;
     const formData = new FormData();
-    formData.append("title", title);
-    formData.append("subtitle", subtitle);
-    formData.append("description", description);
+    formData.append("category", category);
+    formData.append("order", order);
     if (image && image.originFileObj) {
       formData.append("image", image.originFileObj);
     }
-
     try {
       const response = await fetch(
-        `http://localhost:7000/interior/aboutus/${id}`,
+        `http://localhost:7000/interior/gallery/${id}`,
         {
           method: "PATCH",
           body: formData,
         }
       );
       const data = await response.json();
-      console.log(data, "from main edit");
+      console.log(data, "from gallery edit");
       if (response.ok) {
         setImage(null);
-        console.log("About Main Section updated successfully:", data.updated);
-        message.success("About Main Section updated successfully");
-        navigate("/admin/aboutus");
+        console.log("Gallery Section updated successfully:", data.updated);
+        message.success("Gallery Section updated successfully");
+        navigate("/admin/gallery");
       } else {
         if (data.errors) {
           for (const key in data.errors) {
@@ -78,17 +68,16 @@ const MainAboutEdit = () => {
           }
         }
         console.error(
-          "Failed to update About Main Section:",
+          "Failed to update Gallery Section:",
           data.message || "Something went wrong"
         );
-        message.error(data.message || "Failed to update About Main Section");
+        message.error(data.message || "Failed to update Gallery Section");
       }
     } catch (error) {
-      console.error("Failed to update About Main Section:", error);
-      message.error("Failed to update About Main Section");
+      console.error("Failed to update Gallery Section:", error);
+      message.error("Failed to update Gallery Section");
     }
   };
-
   const handleFileChange = (info) => {
     if (info.file instanceof File) {
       setImage({
@@ -100,7 +89,6 @@ const MainAboutEdit = () => {
       });
     }
   };
-
   const customItemRender = (originNode, file) => {
     if (file.url) {
       return (
@@ -116,27 +104,19 @@ const MainAboutEdit = () => {
     }
     return originNode;
   };
-
   return (
     <div>
-      <h3>Edit About Us</h3>
+      <h3>Edit Gallery</h3>
       <Form form={form} onFinish={handleEdit}>
-        <Form.Item name="title" label="Title">
-          <Input />
-        </Form.Item>
         <Form.Item
-          name="subtitle"
-          label="Subtitle"
+          name="category"
+          label="Category"
           rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          name="description"
-          label="Description"
-          rules={[{ required: true }]}
-        >
-          <Input.TextArea />
+        <Form.Item name="order" label="Order" rules={[{ required: true }]}>
+          <InputNumber />
         </Form.Item>
         <Form.Item name="image" label="Image">
           <Upload
@@ -149,6 +129,7 @@ const MainAboutEdit = () => {
             <Button icon={<UploadOutlined />}>Upload Single Image</Button>
           </Upload>
         </Form.Item>
+
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Save Changes
@@ -157,6 +138,6 @@ const MainAboutEdit = () => {
       </Form>
     </div>
   );
-};
+}
 
-export default MainAboutEdit;
+export default GalleryEdit;

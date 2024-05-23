@@ -6,9 +6,11 @@ import {
   AiOutlineUser,
   AiOutlineBgColors,
 } from "react-icons/ai";
+import { FaWpforms } from "react-icons/fa";
+import { FcGallery } from "react-icons/fc";
 import { AiFillHeart } from "react-icons/ai";
 import { CiHome } from "react-icons/ci";
-
+import { SiTrendmicro } from "react-icons/si";
 import { FcAbout } from "react-icons/fc";
 import { RiCouponLine } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
@@ -29,6 +31,7 @@ const MainLayout = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const navigate = useNavigate();
+
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -43,7 +46,7 @@ const MainLayout = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={[""]}
+          defaultSelectedKeys={["home"]}
           onClick={({ key }) => {
             if (key == "signout") {
             } else {
@@ -51,11 +54,6 @@ const MainLayout = () => {
             }
           }}
           items={[
-            {
-              key: "",
-              icon: <AiOutlineDashboard className="fs-4" />,
-              label: "Dashboard",
-            },
             {
               key: "home",
               icon: <CiHome className="fs-4" />,
@@ -71,107 +69,21 @@ const MainLayout = () => {
               icon: <FcAbout className="fs-4" />,
               label: "About FAQS",
             },
-            // {
-            //   key: "Catalog",
-            //   icon: <AiOutlineShoppingCart className="fs-4" />,
-            //   label: "Catalog",
-            //   children: [
-            //     {
-            //       key: "product",
-            //       icon: <AiOutlineShoppingCart className="fs-4" />,
-            //       label: "Add Product",
-            //     },
-            //     {
-            //       key: "list-product",
-            //       icon: <AiOutlineShoppingCart className="fs-4" />,
-            //       label: "Product List",
-            //     },
-            //     {
-            //       key: "brand",
-            //       icon: <SiBrandfolder className="fs-4" />,
-            //       label: "Brand",
-            //     },
-            //     {
-            //       key: "list-brand",
-            //       icon: <SiBrandfolder className="fs-4" />,
-            //       label: "Brand List ",
-            //     },
-            //     {
-            //       key: "category",
-            //       icon: <BiCategoryAlt className="fs-4" />,
-            //       label: "Category",
-            //     },
-            //     {
-            //       key: "list-category",
-            //       icon: <BiCategoryAlt className="fs-4" />,
-            //       label: "Category List",
-            //     },
-            //     {
-            //       key: "color",
-            //       icon: <AiOutlineBgColors className="fs-4" />,
-            //       label: "Color",
-            //     },
-            //     {
-            //       key: "list-color",
-            //       icon: <AiOutlineBgColors className="fs-4" />,
-            //       label: "Color List",
-            //     },
-            //   ],
-            // },
-            // {
-            //   key: "orders",
-            //   icon: <FaClipboardList className="fs-4" />,
-            //   label: "Orders",
-            // },
-            // {
-            //   key: "marketing",
-            //   icon: <RiCouponLine className="fs-4" />,
-            //   label: "Marketing",
-            //   children: [
-            //     {
-            //       key: "coupon",
-            //       icon: <ImBlog className="fs-4" />,
-            //       label: "Add Coupon",
-            //     },
-            //     {
-            //       key: "coupon-list",
-            //       icon: <RiCouponLine className="fs-4" />,
-            //       label: "Coupon List",
-            //     },
-            //   ],
-            // },
-            // {
-            //   key: "blogs",
-            //   icon: <FaBloggerB className="fs-4" />,
-            //   label: "Blogs",
-            //   children: [
-            //     {
-            //       key: "blog",
-            //       icon: <ImBlog className="fs-4" />,
-            //       label: "Add Blog",
-            //     },
-            //     {
-            //       key: "blog-list",
-            //       icon: <FaBloggerB className="fs-4" />,
-            //       label: "Blog List",
-            //     },
-            //     {
-            //       key: "blog-category",
-            //       icon: <ImBlog className="fs-4" />,
-            //       label: "Add Blog Category",
-            //     },
-            //     {
-            //       key: "blog-category-list",
-            //       icon: <FaBloggerB className="fs-4" />,
-            //       label: "Blog Category List",
-            //     },
-            //   ],
-            // },
-            // {
-            //   key: "enquiries",
-            //   icon: <FaClipboardList className="fs-4" />,
-            //   label: "Enquiries",
-            // },
+            {
+              key: "trend",
+              icon: <SiTrendmicro className="fs-4" />,
+              label: "Latest Trends",
+            },
+            {
+              key: "gallery",
+              icon: <FcGallery className="fs-4" />,
+              label: "Portfolio",
+            },
+            {
+              key: "contact",
+              icon: <FaWpforms className="fs-4" />,
+              label: "Contact Form",
+            },
           ]}
         />
       </Sider>
@@ -258,7 +170,7 @@ const MainLayout = () => {
             rtl={false}
             pauseOnFocusLoss
             draggable
-            theme="light"
+            theme="dark"
           />
           <Outlet />
         </Content>

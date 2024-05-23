@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const HomeEdit = () => {
   const [form] = Form.useForm();
   const [images, setImages] = useState([]);
   const { id } = useParams();
   const navigate = useNavigate();
+
   useEffect(() => {
-    // Fetch existing data for the specified ID
     const fetchData = async () => {
       try {
         const response = await fetch(
           `http://localhost:7000/interior/home/${id}`
         );
         const data = await response.json();
-        console.log(data, "get");
+
+        // Convert existing images to fileList format
+        const fileList = data.images.map((image, index) => ({
+          uid: index,
+          name: image.split("/").pop(),
+          status: "done",
+          url: image,
+        }));
+
+        setImages(fileList);
+
         form.setFieldsValue({
           title: data.title,
           description: data.description,
@@ -29,16 +38,30 @@ const HomeEdit = () => {
 
     fetchData();
   }, [id, form]);
+
+  const handleFileChange = ({ fileList }) => {
+    // Keep only the last uploaded file in the fileList
+    if (fileList.length > 0) {
+      const newFileList = [fileList[fileList.length - 1]];
+      setImages(newFileList);
+    } else {
+      setImages([]);
+    }
+  };
+
   const handleEdit = async (values) => {
     const { title, description } = values;
 
     const formData = new FormData();
     formData.append("title", title);
     formData.append("description", description);
+
     images.forEach((image) => {
-      formData.append("images", image.originFileObj);
-      console.log(image.originFileObj);
+      if (image.originFileObj) {
+        formData.append("images", image.originFileObj);
+      }
     });
+
     try {
       const response = await fetch(
         `http://localhost:7000/interior/home/${id}`,
@@ -49,40 +72,52 @@ const HomeEdit = () => {
       );
       const data = await response.json();
       if (response.ok) {
-        console.log("Home updated successfully:", data.updatedHome);
         message.success("Home updated successfully");
         navigate("/admin/home");
       } else {
-        console.error(
-          "Failed to update home:",
-          data.message || "Something went wrong"
-        );
+        if (data.errors) {
+          for (const key in data.errors) {
+            if (Object.hasOwnProperty.call(data.errors, key)) {
+              message.error(data.errors[key]);
+            }
+          }
+        }
         message.error(data.message || "Failed to update home");
-        navigate("/admin/home");
       }
     } catch (error) {
       console.error("Failed to update home:", error);
       message.error("Failed to update home");
-      navigate("/admin/home");
     }
   };
 
-  const handleFileChange = (info) => {
-    setImages(info.fileList);
-    console.log(info.fileList, "fl");
+  const customItemRender = (originNode, file) => {
+    const imageURL =
+      file.url ||
+      (file.originFileObj && URL.createObjectURL(file.originFileObj));
+    return (
+      <div>
+        <img
+          src={imageURL}
+          alt={file.name}
+          style={{ width: "100px", height: "100px", objectFit: "cover" }}
+        />
+        <div>{file.name}</div>
+      </div>
+    );
   };
 
   return (
     <div>
       <h3>Edit Home</h3>
       <Form form={form} onFinish={handleEdit}>
-        <Form.Item name="_id" hidden>
+        <Form.Item name="title" label="Title" rules={[{ required: true }]}>
           <Input />
         </Form.Item>
-        <Form.Item name="title" label="Title">
-          <Input />
-        </Form.Item>
-        <Form.Item name="description" label="Description">
+        <Form.Item
+          name="description"
+          label="Description"
+          rules={[{ required: true }]}
+        >
           <Input.TextArea />
         </Form.Item>
         <Form.Item name="images" label="Images">
@@ -91,6 +126,8 @@ const HomeEdit = () => {
             beforeUpload={() => false}
             onChange={handleFileChange}
             fileList={images}
+            listType="picture"
+            itemRender={customItemRender}
           >
             <Button icon={<UploadOutlined />}>Upload Images</Button>
           </Upload>

@@ -3,9 +3,9 @@ import { Button, message, Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
 const { confirm } = Modal;
-const AboutDelete = () => {
+
+function GalleryDelete() {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ const AboutDelete = () => {
       onOk: async () => {
         try {
           const response = await fetch(
-            `http://localhost:7000/interior/faq/${id}`,
+            `http://localhost:7000/interior/gallery/${id}`,
             {
               method: "DELETE",
             }
@@ -28,15 +28,15 @@ const AboutDelete = () => {
           const data = await response.json();
           if (response.ok) {
             message.success("Entry deleted successfully");
-            navigate("/admin/about");
+            navigate("/admin/gallery");
           } else {
             message.error(data.message || "Failed to delete entry");
-            navigate("/admin/about");
+            navigate("/admin/gallery");
           }
         } catch (error) {
           console.error("Failed to delete entry:", error);
           message.error("Failed to delete entry");
-          navigate("/admin/about");
+          navigate("/admin/gallery");
         }
       },
     });
@@ -64,6 +64,6 @@ const AboutDelete = () => {
       </Button>
     </div>
   );
-};
+}
 
-export default AboutDelete;
+export default GalleryDelete;

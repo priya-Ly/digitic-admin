@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Upload, message } from "antd";
+import { Form, Input, Button, Upload, message, notification } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 const HomeAdd = () => {
@@ -17,29 +17,34 @@ const HomeAdd = () => {
       formData.append("description", description);
       images.forEach((image) => {
         formData.append("images", image.originFileObj);
-        console.log(image.originFileObj);
       });
 
       const response = await fetch("http://localhost:7000/interior/home", {
         method: "POST",
         body: formData,
       });
-      console.log(response, "resp");
+
       const data = await response.json();
-      console.log(data, "dd");
+
       if (response.ok) {
-        console.log("New entry added successfully:", data);
-        setImages([]); // Clear images after successful submission
         message.success("New entry added successfully");
+        setImages([]);
         navigate("/admin/home");
       } else {
-        console.error("Error:", data.message);
-        message.error(data.message);
-        navigate("/admin/home");
+        if (data.errors) {
+          for (const key in data.errors) {
+            if (Object.hasOwnProperty.call(data.errors, key)) {
+              message.error(data.errors[key]);
+            }
+          }
+        } else {
+          message.error(data.message || "An error occurred");
+        }
       }
     } catch (error) {
       console.error("Error:", error.message);
-      message.error(error.message);
+      message.error("An error occurred");
+
       navigate("/admin/home");
     }
   };
@@ -53,10 +58,14 @@ const HomeAdd = () => {
     <div>
       <h3>Add New Entry</h3>
       <Form onFinish={handleAdd}>
-        <Form.Item name="title" label="Title">
+        <Form.Item name="title" label="Title" rules={[{ required: true }]}>
           <Input />
         </Form.Item>
-        <Form.Item name="description" label="Description">
+        <Form.Item
+          name="description"
+          label="Description"
+          rules={[{ required: true }]}
+        >
           <Input.TextArea />
         </Form.Item>
         <Form.Item name="images" label="Images">

@@ -40,15 +40,20 @@ const HomeDelete = () => {
     });
   };
   const buttonStyle = {
-    backgroundColor: "white",
+    background: "linear-gradient(yellow, #ff7e5f, #Ffffed)",
     border: "2px solid black",
     color: "black",
-    textAlign: "center",
-    textDecoration: "none",
-    display: "inline-block",
     fontSize: "16px",
     borderRadius: "12px",
+    padding: "8px 10px",
+    margin: "2px 3px",
+    display: "flex",
+    textAlign: "center",
+    justifyContent: "center",
+    width: "80px",
+    height: "40px",
   };
+
   return (
     <div>
       <h3>Delete Home Entry</h3>

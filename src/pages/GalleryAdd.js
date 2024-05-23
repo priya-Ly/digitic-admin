@@ -3,21 +3,20 @@ import { Form, Input, Button, Upload, message, InputNumber } from "antd";
 import { useNavigate } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
 
-function TrendAdd() {
+function GalleryAdd() {
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
 
   const handleAdd = async (values) => {
-    const { title, description, order } = values;
+    const { category, order } = values;
     try {
       const formData = new FormData();
-      formData.append("title", title);
-      formData.append("description", description);
+      formData.append("category", category);
       formData.append("order", order);
 
       formData.append("image", image);
       console.log("image");
-      const response = await fetch("http://localhost:7000/interior/trends", {
+      const response = await fetch("http://localhost:7000/interior/gallery", {
         method: "POST",
         body: formData,
       });
@@ -25,7 +24,7 @@ function TrendAdd() {
       if (response.ok) {
         setImage(null);
         message.success("New entry added successfully");
-        navigate("/admin/trend");
+        navigate("/admin/gallery");
       } else {
         if (data.errors) {
           for (const key in data.errors) {
@@ -51,16 +50,14 @@ function TrendAdd() {
     <div>
       <h3>Add New Entry</h3>
       <Form onFinish={handleAdd}>
-        <Form.Item name="title" label="Title" rules={[{ required: true }]}>
-          <Input />
-        </Form.Item>
         <Form.Item
-          name="description"
-          label="Description"
+          name="category"
+          label="Category"
           rules={[{ required: true }]}
         >
-          <Input.TextArea />
+          <Input />
         </Form.Item>
+
         <Form.Item name="order" label="Order" rules={[{ required: true }]}>
           <InputNumber />
         </Form.Item>
@@ -84,4 +81,4 @@ function TrendAdd() {
   );
 }
 
-export default TrendAdd;
+export default GalleryAdd;

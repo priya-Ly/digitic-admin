@@ -37,6 +37,10 @@ const MainAbout = () => {
       dataIndex: "description",
     },
     {
+      title: "UpdatedAt",
+      dataIndex: "updatedAt",
+    },
+    {
       title: "Id",
       dataIndex: "_id",
     },
@@ -45,14 +49,19 @@ const MainAbout = () => {
       dataIndex: "_id", // Use a unique identifier
       render: (_, record) => (
         <span>
-          <Link to={`/admin/aboutus/${record._id}`}>Edit</Link>
+          <Link to={`/admin/aboutus/${record._id}`} style={buttonStyle}>
+            Edit
+          </Link>
           <br />
-          <Link to={`/admin/aboutus/delete/${record._id}`}>Delete</Link>
+          <Link to={`/admin/aboutus/delete/${record._id}`} style={buttonStyle}>
+            Delete
+          </Link>
         </span>
       ),
     },
   ];
   const buttonStyle = {
+    background: "linear-gradient(yellow, #ff7e5f, #Ffffed)",
     backgroundColor: "white",
     border: "2px solid black",
     color: "black",
@@ -61,13 +70,15 @@ const MainAbout = () => {
     display: "inline-block",
     fontSize: "16px",
     borderRadius: "12px",
+    padding: "8px 10px",
+    margin: "2px 3px",
   };
 
   return (
     <div>
       <h3 className="mb-4 title">About Us</h3>
       <Link to={`/admin/aboutus/add/`} style={buttonStyle}>
-        <Button>Add</Button>
+        Add
       </Link>
 
       <div>

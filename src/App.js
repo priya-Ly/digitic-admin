@@ -37,6 +37,15 @@ import MainAbout from "./pages/MainAbout.js";
 import MainAboutAdd from "./pages/MainAboutAdd.js";
 import MainAboutEdit from "./pages/MainAboutEdit.js";
 import MainAboutDelete from "./pages/MainAboutDelete.js";
+import Trend from "./pages/Trend.js";
+import TrendAdd from "./pages/TrendAdd.js";
+import TrendEdit from "./pages/TrendEdit.js";
+import TrendDelete from "./pages/TrendDelete.js";
+import InteriorGallery from "./pages/gallery.js";
+import GalleryEdit from "./pages/GalleryEdit.js";
+import GalleryDelete from "./pages/GalleryDelete.js";
+import GalleryAdd from "./pages/GalleryAdd.js";
+import Contact from "./pages/Contact.js";
 function App() {
   return (
     <Router>
@@ -45,10 +54,10 @@ function App() {
         <Route path="/reset-password" element={<Resetpassword />} />
         <Route path="/forgot-password" element={<Forgotpassword />} />
         <Route path="/admin" element={<MainLayout />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<Home />} />
           {/* <Route path="enquiries" element={<Enquiries />} />
-          <Route path="enquiries/:id" element={<ViewEnq />} /> */}
-          {/* <Route path="blog-list" element={<Bloglist />} />
+          <Route path="enquiries/:id" element={<ViewEnq />} />
+          <Route path="blog-list" element={<Bloglist />} />
           <Route path="blog" element={<Addblog />} />
           <Route path="blog/:id" element={<Addblog />} />
           <Route path="coupon-list" element={<Couponlist />} />
@@ -71,17 +80,15 @@ function App() {
           <Route path="aboutus/add/" element={<MainAboutAdd />} />
           <Route path="aboutus/:id" element={<MainAboutEdit />} />
           <Route path="aboutus/delete/:id" element={<MainAboutDelete />} />
-          {/* <Route path="list-color" element={<Colorlist />} />
-          <Route path="color" element={<Addcolor />} />
-          <Route path="color/:id" element={<Addcolor />} />
-          <Route path="list-category" element={<Categorylist />} />
-          <Route path="category" element={<Addcat />} />
-          <Route path="category/:id" element={<Addcat />} />
-          <Route path="list-brand" element={<Brandlist />} />
-          <Route path="brand" element={<Addbrand />} />
-          <Route path="brand/:id" element={<Addbrand />} />
-          <Route path="list-product" element={<Productlist />} />
-          <Route path="product" element={<Addproduct />} /> */}
+          <Route path="trend" element={<Trend />} />
+          <Route path="trends/add" element={<TrendAdd />} />
+          <Route path="trend/:id" element={<TrendEdit />} />
+          <Route path="trend/delete/:id" element={<TrendDelete />} />
+          <Route path="gallery" element={<InteriorGallery />} />
+          <Route path="gallery/:id" element={<GalleryEdit />} />
+          <Route path="gallery/delete/:id" element={<GalleryDelete />} />
+          <Route path="gallery/add/" element={<GalleryAdd />} />
+          <Route path="contact" element={<Contact />} />
         </Route>
       </Routes>
     </Router>

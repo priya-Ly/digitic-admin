@@ -30,6 +30,13 @@ const MainAboutAdd = () => {
         message.success("New entry added successfully");
         navigate("/admin/aboutus");
       } else {
+        if (data.errors) {
+          for (const key in data.errors) {
+            if (Object.hasOwnProperty.call(data.errors, key)) {
+              message.error(data.errors[key]);
+            }
+          }
+        }
         console.error("Error:", data.message);
         message.error(data.message);
       }
