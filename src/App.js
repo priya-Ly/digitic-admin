@@ -46,6 +46,12 @@ import GalleryEdit from "./pages/GalleryEdit.js";
 import GalleryDelete from "./pages/GalleryDelete.js";
 import GalleryAdd from "./pages/GalleryAdd.js";
 import Contact from "./pages/Contact.js";
+import Content from "./pages/Content.js";
+import BlogContent from "./pages/ContentAdd.js";
+import Author from "./pages/Author.js";
+import AuthorAdd from "./pages/AuthorAdd.js";
+import AuthorEdit from "./pages/AuthorEdit.js";
+import AuthorDelete from "./pages/AuthorDelete.js";
 function App() {
   return (
     <Router>
@@ -89,6 +95,12 @@ function App() {
           <Route path="gallery/delete/:id" element={<GalleryDelete />} />
           <Route path="gallery/add/" element={<GalleryAdd />} />
           <Route path="contact" element={<Contact />} />
+          <Route path="blog" element={<Content />} />
+          <Route path="blog/add" element={<BlogContent />} />
+          <Route path="author" element={<Author />} />
+          <Route path="author/add" element={<AuthorAdd />} />
+          <Route path="author/:id" element={<AuthorEdit />} />
+          <Route path="author/delete/:id" element={<AuthorDelete />} />
         </Route>
       </Routes>
     </Router>

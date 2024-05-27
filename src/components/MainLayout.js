@@ -12,6 +12,8 @@ import { AiFillHeart } from "react-icons/ai";
 import { CiHome } from "react-icons/ci";
 import { SiTrendmicro } from "react-icons/si";
 import { FcAbout } from "react-icons/fc";
+import { IoPeopleCircleSharp } from "react-icons/io5";
+import { MdCategory } from "react-icons/md";
 import { RiCouponLine } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,6 +24,8 @@ import { IoIosNotifications } from "react-icons/io";
 import { FaClipboardList, FaBloggerB } from "react-icons/fa";
 import { SiBrandfolder } from "react-icons/si";
 import { BiCategoryAlt } from "react-icons/bi";
+import { ImBlogger2 } from "react-icons/im";
+
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
@@ -83,6 +87,21 @@ const MainLayout = () => {
               key: "contact",
               icon: <FaWpforms className="fs-4" />,
               label: "Contact Form",
+            },
+            {
+              key: "author",
+              icon: <IoPeopleCircleSharp className="fs-4" />,
+              label: "Author Data",
+            },
+            {
+              key: "blogCategory",
+              icon: <MdCategory className="fs-4" />,
+              label: "Category Data",
+            },
+            {
+              key: "blog",
+              icon: <ImBlogger2 className="fs-4" />,
+              label: "Blog Content",
             },
           ]}
         />
