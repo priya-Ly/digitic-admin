@@ -52,6 +52,7 @@ import Author from "./pages/Author.js";
 import AuthorAdd from "./pages/AuthorAdd.js";
 import AuthorEdit from "./pages/AuthorEdit.js";
 import AuthorDelete from "./pages/AuthorDelete.js";
+import ContentEdit from "./pages/ContentEdit.js";
 function App() {
   return (
     <Router>
@@ -97,6 +98,7 @@ function App() {
           <Route path="contact" element={<Contact />} />
           <Route path="blog" element={<Content />} />
           <Route path="blog/add" element={<BlogContent />} />
+          <Route path="blog/:id" element={<ContentEdit />} />
           <Route path="author" element={<Author />} />
           <Route path="author/add" element={<AuthorAdd />} />
           <Route path="author/:id" element={<AuthorEdit />} />

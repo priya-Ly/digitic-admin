@@ -45,7 +45,6 @@ const MainAboutEdit = () => {
 
   const handleEdit = async (values) => {
     const { title, description, subtitle } = values;
-
     const formData = new FormData();
     formData.append("title", title);
     formData.append("subtitle", subtitle);

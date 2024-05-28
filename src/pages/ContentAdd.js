@@ -111,28 +111,39 @@ function BlogContent() {
           config: {
             uploader: {
               async uploadByFile(file) {
-                const formData = new FormData();
-                formData.append("file", file);
+                try {
+                  const formData = new FormData();
+                  formData.append("file", file);
 
-                const response = await axios.post(
-                  `http://localhost:7000/interior/api/upload`,
-                  formData,
-                  {
-                    headers: {
-                      "Content-Type": "multipart/form-data",
-                    },
-                    withCredentials: false,
+                  const response = await axios.post(
+                    "http://localhost:7000/interior/upload",
+                    formData,
+                    {
+                      headers: {
+                        "Content-Type": "multipart/form-data",
+                      },
+                    }
+                  );
+
+                  if (response.data.success === 1) {
+                    console.log("File uploaded successfully:", response.data);
+                    return {
+                      success: 1,
+                      file: { url: response.data.file.url }, // Provide the URL of the uploaded file
+                    };
+                  } else {
+                    console.error("Error uploading file:", response.data.error);
+                    return { error: { message: "Failed to upload file" } };
                   }
-                );
-                console.log(response, "resppp");
-                if (response.data.success === 1) {
-                  console.log("attches", response.data);
-                  return response.data;
+                } catch (error) {
+                  console.error("Error uploading file:", error.message);
+                  return { error: { message: "Failed to upload file" } };
                 }
               },
             },
           },
         },
+
         alert: {
           class: Alert,
           config: {
@@ -251,12 +262,17 @@ function BlogContent() {
 
                 if (response.data.success === 1) {
                   console.log(response.data, "filee");
-                  return response.data;
+                  return {
+                    success: 1,
+                    file: {
+                      url: response.data.file.url,
+                    },
+                  };
                 }
               },
               async uploadByUrl(url) {
                 const response = await axios.post(
-                  `http://localhost:7000/interior/uploadUrl`,
+                  `http://localhost:7000/interior/api/uploadUrl`,
                   {
                     url,
                     headers: {
@@ -300,6 +316,7 @@ function BlogContent() {
         time: savedData.time,
         version: savedData.version,
       };
+      console.log(formattedContent, "fa");
       const formData = new FormData();
       formData.append("title", values.title);
       formData.append("description", values.description);
