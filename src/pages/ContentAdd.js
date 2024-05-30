@@ -24,6 +24,7 @@ import Quote from "@editorjs/quote";
 import Table from "@editorjs/table";
 import AttachesTool from "@editorjs/attaches";
 import ImageTool from "@editorjs/image";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -34,6 +35,7 @@ function BlogContent() {
   const [image, setImage] = useState(null);
   const [authors, setAuthors] = useState([]);
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -157,13 +159,13 @@ function BlogContent() {
             defaultStyle: "unordered",
           },
         },
-        list: {
-          class: NestedList,
-          inlineToolbar: true,
-          config: {
-            defaultStyle: "unordered",
-          },
-        },
+        // list: {
+        //   class: NestedList,
+        //   inlineToolbar: true,
+        //   config: {
+        //     defaultStyle: "unordered",
+        //   },
+        // },
         nestedchecklist: editorjsNestedChecklist,
         checklist: {
           class: Checklist,
@@ -337,6 +339,7 @@ function BlogContent() {
         setImage(null);
         form.resetFields(); // Reset form fields after successful submit
         message.success("New Blog Added Successfully");
+        navigate("/admin/blog");
       } else {
         if (data.errors) {
           for (const key in data.errors) {

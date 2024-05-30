@@ -1,19 +1,50 @@
-import React, { useState } from "react";
-import { Form, Input, Button, Upload, message, InputNumber } from "antd";
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  Input,
+  Button,
+  Upload,
+  message,
+  InputNumber,
+  Select,
+} from "antd";
 import { useNavigate } from "react-router-dom";
 import { UploadOutlined } from "@ant-design/icons";
+const { Option } = Select;
 
 function GalleryAdd() {
   const [image, setImage] = useState(null);
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoriesResponse = await fetch(
+          "http://localhost:7000/interior/galleryCategory"
+        );
+
+        if (!categoriesResponse.ok) {
+          throw new Error("Failed to fetch categories");
+        }
+
+        const categoriesData = await categoriesResponse.json();
+
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleAdd = async (values) => {
-    const { category, order } = values;
+    const { categoryId, order } = values;
     try {
       const formData = new FormData();
-      formData.append("category", category);
+      formData.append("categoryId", categoryId);
       formData.append("order", order);
-
       formData.append("image", image);
       console.log("image");
       const response = await fetch("http://localhost:7000/interior/gallery", {
@@ -51,11 +82,17 @@ function GalleryAdd() {
       <h3>Add New Entry</h3>
       <Form onFinish={handleAdd}>
         <Form.Item
-          name="category"
+          name="categoryId"
           label="Category"
           rules={[{ required: true }]}
         >
-          <Input />
+          <Select placeholder="Select a category">
+            {categories.map((category) => (
+              <Option key={category._id} value={category._id}>
+                {category.categoryName}
+              </Option>
+            ))}
+          </Select>
         </Form.Item>
 
         <Form.Item name="order" label="Order" rules={[{ required: true }]}>

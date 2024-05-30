@@ -53,6 +53,15 @@ import AuthorAdd from "./pages/AuthorAdd.js";
 import AuthorEdit from "./pages/AuthorEdit.js";
 import AuthorDelete from "./pages/AuthorDelete.js";
 import ContentEdit from "./pages/ContentEdit.js";
+import BlogCategory from "./pages/BlogCategory.js";
+import BlogCategoryAdd from "./pages/BlogCategoryAdd.js";
+import BlogCategoryDelete from "./pages/BlogCategoryDelete.js";
+import BlogCategoryEdit from "./pages/BlogCategoryEdit.js";
+import ContentDelete from "./pages/ContentDelete.js";
+import GalleryCategory from "./pages/GalleryCategory.js";
+import GalleryCategoryAdd from "./pages/GalleryCategoryAdd.js";
+import GalleryCategoryEdit from "./pages/GalleryCategoryEdit.js";
+import GalleryCategoryDelete from "./pages/GalleryCategoryDelete.js";
 function App() {
   return (
     <Router>
@@ -99,10 +108,25 @@ function App() {
           <Route path="blog" element={<Content />} />
           <Route path="blog/add" element={<BlogContent />} />
           <Route path="blog/:id" element={<ContentEdit />} />
+          <Route path="blog/delete/:id" element={<ContentDelete />} />
           <Route path="author" element={<Author />} />
           <Route path="author/add" element={<AuthorAdd />} />
           <Route path="author/:id" element={<AuthorEdit />} />
           <Route path="author/delete/:id" element={<AuthorDelete />} />
+          <Route path="blogCategory" element={<BlogCategory />} />
+          <Route path="blogCategory/add" element={<BlogCategoryAdd />} />
+          <Route path="blogCategory/:id" element={<BlogCategoryEdit />} />
+          <Route
+            path="blogCategory/delete/:id"
+            element={<BlogCategoryDelete />}
+          />
+          <Route path="galleryCategory" element={<GalleryCategory />} />
+          <Route path="galleryCategory/add" element={<GalleryCategoryAdd />} />
+          <Route path="galleryCategory/:id" element={<GalleryCategoryEdit />} />
+          <Route
+            path="galleryCategory/delete/:id"
+            element={<GalleryCategoryDelete />}
+          />
         </Route>
       </Routes>
     </Router>

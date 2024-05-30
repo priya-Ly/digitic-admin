@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { Form, Input, Button, message, InputNumber } from "antd";
 import { useNavigate } from "react-router-dom";
 
-function BlogCategoryAdd() {
+function GalleryCategoryAdd() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const onAdd = async (values) => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:7000/interior/category", {
+      const response = await fetch("http://localhost:7000/interior/galleryCategory", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -23,7 +23,7 @@ function BlogCategoryAdd() {
       if (response.ok) {
         console.log("Category entry added:", data);
         message.success("Category entry added successfully", data);
-        navigate("/admin/blogCategory");
+        navigate("/admin/galleryCategory");
       } else {
         if (data.errors) {
           for (const key in data.errors) {
@@ -40,7 +40,7 @@ function BlogCategoryAdd() {
     } catch (error) {
       console.error("Error adding new Category entry:", error.message);
       message.error("Failed to add new Category entry");
-      navigate("/admin/blogCategory");
+      navigate("/admin/galleryCategory");
     } finally {
       setLoading(false);
     }
@@ -68,4 +68,4 @@ function BlogCategoryAdd() {
   );
 }
 
-export default BlogCategoryAdd;
+export default GalleryCategoryAdd

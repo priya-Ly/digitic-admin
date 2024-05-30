@@ -27,7 +27,6 @@ import AttachesTool from "@editorjs/attaches";
 import ImageTool from "@editorjs/image";
 
 const { Option } = Select;
-
 function ContentEdit() {
   const [form] = Form.useForm();
   const ejInstance = useRef(null);
@@ -75,6 +74,7 @@ function ContentEdit() {
           `http://localhost:7000/interior/blog/${id}`
         );
         const data = await response.json();
+        console.log(data, "d from edit");
         if (data.image) {
           setImage({
             uid: "-1",
@@ -90,7 +90,7 @@ function ContentEdit() {
           title: data.title,
           description: data.description,
           categoryId: data.categoryId,
-          featured: data.featured === false ? "No" : "Yes",
+          featured: data.featured === false ? "no" : "yes",
           authorId: data.authorId,
           bannerCaption: data.bannerCaption,
         });
@@ -319,12 +319,7 @@ function ContentEdit() {
 
                 if (response.data.success === 1) {
                   console.log(response.data, "urll comee");
-                  return {
-                    success: 1,
-                    file: {
-                      url: response.data.file.secure_url,
-                    },
-                  };
+                  return response.data;
                 }
               },
             },
@@ -358,7 +353,7 @@ function ContentEdit() {
       formData.append("authorId", values.authorId); // Ensure these match backend keys
       formData.append("categoryId", values.categoryId); // Ensure these match backend keys
       formData.append("image", image); // Add the image file
-      console.log(formData);
+      console.log(formData.featured, "f");
       const response = await fetch(
         `http://localhost:7000/interior/blog/${id}`,
         {
@@ -373,6 +368,7 @@ function ContentEdit() {
         setImage(null);
         form.resetFields(); // Reset form fields after successful submit
         message.success("Blog Updated Successfully");
+        navigate("/admin/blog");
       } else {
         if (data.errors) {
           for (const key in data.errors) {

@@ -10,7 +10,29 @@ const InteriorGallery = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1); // Current page number
   const [pageSize, setPageSize] = useState(4); // Number of items per page
+  const [categories, setCategories] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const categoriesResponse = await fetch(
+          "http://localhost:7000/interior/galleryCategory"
+        );
+
+        if (!categoriesResponse.ok) {
+          throw new Error("Failed to fetch categories");
+        }
+
+        const categoriesData = await categoriesResponse.json();
+        console.log(categoriesData, "cd");
+        setCategories(categoriesData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -50,7 +72,7 @@ const InteriorGallery = () => {
     setCurrentPage(1);
   };
   const filteredData = images.filter((item) =>
-    item.category.toLowerCase().includes(searchQuery.toLowerCase())
+    item.order.toString().toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const sortedData = filteredData.sort((a, b) => {
@@ -65,6 +87,11 @@ const InteriorGallery = () => {
     (currentPage - 1) * pageSize,
     currentPage * pageSize
   );
+  const getCategoryName = (categoryId) => {
+    const category = categories.find((category) => category._id === categoryId);
+    console.log(category, "a");
+    return category ? `${category.categoryName}` : "Unknown";
+  };
   const buttonStyle = {
     background: "linear-gradient(yellow, #ff7e5f, #Ffffed)",
     backgroundColor: "white",
@@ -93,13 +120,14 @@ const InteriorGallery = () => {
     },
     {
       title: "Category",
-      dataIndex: "category",
+      dataIndex: "categoryId",
       key: "category",
       sorter: true,
       sortOrder: sortBy === "category" && sortOrder,
       onHeaderCell: () => ({
         onClick: () => handleSort("category"),
       }),
+      render: (categoryId) => getCategoryName(categoryId),
     },
     {
       title: "Order",

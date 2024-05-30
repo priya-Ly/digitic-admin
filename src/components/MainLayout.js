@@ -14,6 +14,8 @@ import { SiTrendmicro } from "react-icons/si";
 import { FcAbout } from "react-icons/fc";
 import { IoPeopleCircleSharp } from "react-icons/io5";
 import { MdCategory } from "react-icons/md";
+import { MdOutlineCategory } from "react-icons/md";
+
 import { RiCouponLine } from "react-icons/ri";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -77,6 +79,11 @@ const MainLayout = () => {
               key: "trend",
               icon: <SiTrendmicro className="fs-4" />,
               label: "Latest Trends",
+            },
+            {
+              key: "galleryCategory",
+              icon: <MdOutlineCategory className="fs-4" />,
+              label: "Gallery Category",
             },
             {
               key: "gallery",

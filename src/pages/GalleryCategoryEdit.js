@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-function AuthorEdit() {
+function GalleryCategoryEdit() {
   const [form] = Form.useForm();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -12,16 +12,15 @@ function AuthorEdit() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:7000/interior/author/${id}`
+          `http://localhost:7000/interior/galleryCategory/${id}`
         );
         const data = await response.json();
         form.setFieldsValue({
-          firstName: data.firstName,
-          lastName: data.lastName,
+          categoryName: data.categoryName,
         });
       } catch (error) {
         console.error("Error fetching data:", error);
-        message.error("Failed to fetch data",error);
+        message.error("Failed to fetch data", error);
       }
     };
 
@@ -31,7 +30,7 @@ function AuthorEdit() {
   const handleEdit = async (values) => {
     try {
       const response = await fetch(
-        `http://localhost:7000/interior/author/${id}`,
+        `http://localhost:7000/interior/galleryCategory/${id}`,
         {
           method: "PATCH",
           headers: {
@@ -43,8 +42,8 @@ function AuthorEdit() {
       const data = await response.json();
       console.log(response, "resp from edit");
       if (response.ok) {
-        message.success("Author Updated Successfully");
-        navigate("/admin/author");
+        message.success("Gallery Category Updated Successfully");
+        navigate("/admin/galleryCategory");
       } else {
         if (data.errors) {
           for (const key in data.errors) {
@@ -53,32 +52,25 @@ function AuthorEdit() {
             }
           }
         } else {
-          message.error(`Failed to update author: ${data.message}`);
+          message.error(`Failed to update galleryCategory: ${data.message}`);
         }
       }
     } catch (error) {
-      console.error("Failed to update author:", error.message);
+      console.error("Failed to update galleryCategory:", error.message);
       message.error(
-        `Failed to update author. Please try again later ${error.message}`
+        `Failed to update galleryCategory. Please try again later ${error.message}`
       );
-      navigate("/admin/author");
+      navigate("/admin/galleryCategory");
     }
   };
 
   return (
     <div>
-      <h3>Edit Author</h3>
+      <h3>Edit Gallery Category</h3>
       <Form form={form} onFinish={handleEdit}>
         <Form.Item
-          name="firstName"
-          label="FirstName"
-          rules={[{ required: true }]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          name="lastName"
-          label="LastName"
+          name="categoryName"
+          label="CategoryName"
           rules={[{ required: true }]}
         >
           <Input />
@@ -93,4 +85,4 @@ function AuthorEdit() {
   );
 }
 
-export default AuthorEdit;
+export default GalleryCategoryEdit;

@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const { confirm } = Modal;
-const BlogCategoryDelete = () => {
+const GalleryCategoryDelete = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ const BlogCategoryDelete = () => {
       onOk: async () => {
         try {
           const response = await fetch(
-            `http://localhost:7000/interior/category/${id}`,
+            `http://localhost:7000/interior/galleryCategory/${id}`,
             {
               method: "DELETE",
             }
@@ -28,15 +28,15 @@ const BlogCategoryDelete = () => {
           const data = await response.json();
           if (response.ok) {
             message.success("Entry deleted successfully");
-            navigate("/admin/blogCategory");
+            navigate("/admin/galleryCategory");
           } else {
             message.error(data.message || "Failed to delete entry");
-            navigate("/admin/blogCategory");
+            navigate("/admin/galleryCategory");
           }
         } catch (error) {
           console.error("Failed to delete entry:", error);
           message.error("Failed to delete entry");
-          navigate("/admin/blogCategory");
+          navigate("/admin/galleryCategory");
         }
       },
     });
@@ -58,7 +58,7 @@ const BlogCategoryDelete = () => {
 
   return (
     <div>
-      <h3>Delete Author Entry</h3>
+      <h3>Delete Gallery Category Entry</h3>
       <Button onClick={handleDelete} type="danger" style={buttonStyle}>
         Delete
       </Button>
@@ -66,4 +66,4 @@ const BlogCategoryDelete = () => {
   );
 };
 
-export default BlogCategoryDelete;
+export default GalleryCategoryDelete;
